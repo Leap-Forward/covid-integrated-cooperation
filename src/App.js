@@ -1,12 +1,74 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Env from './env';
+import Airtable from 'airtable';
 
 function App() {
+  const base = new Airtable({ apiKey: Env.AIRTABLE_API_KEY }).base(
+    Env.AIRTABLE_BASE
+  );
+
+  base('Fears & Needs')
+    .select({
+      // Selecting the first 3 records in Grid view:
+      maxRecords: 3,
+      view: 'Grid view'
+    })
+    .eachPage(
+      (records, fetchNextPage) => {
+        // This function (`page`) will get called for each page of records.
+
+        records.forEach(record => {
+          console.log(
+            'Retrieved',
+            record.get('Aggregated Fears'),
+            record.get('Initiatives')
+          );
+        });
+
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        fetchNextPage();
+      },
+      err => {
+        if (err) {
+          console.error(err);
+        }
+      }
+    );
+
+  base('Initiatives')
+    .select({
+      // Selecting the first 3 records in Grid view:
+      maxRecords: 3,
+      view: 'Grid view'
+    })
+    .eachPage(
+      (records, fetchNextPage) => {
+        // This function (`page`) will get called for each page of records.
+
+        records.forEach(record => {
+          console.log('Retrieved', record.get('Name'));
+        });
+
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        fetchNextPage();
+      },
+      err => {
+        if (err) {
+          console.error(err);
+        }
+      }
+    );
+
   return (
     <div className="App">
       <header className="App-header">
-        {/*<img src={logo} className="App-logo" alt="logo" />*/}
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <p>
           Edit <code>src/App.js</code> and save to test.
         </p>
