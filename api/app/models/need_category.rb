@@ -1,0 +1,2 @@
+class NeedCategory < ApplicationRecord
+end

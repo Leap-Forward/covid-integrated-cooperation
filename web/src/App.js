@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
+import Airtable from 'airtable';
+// import logo from './logo.svg';
 import './App.css';
 import Env from './env';
-import Airtable from 'airtable';
 
 function App() {
   const base = new Airtable({ apiKey: Env.AIRTABLE_API_KEY }).base(
