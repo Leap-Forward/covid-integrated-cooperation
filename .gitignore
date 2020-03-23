@@ -27,25 +27,25 @@ yarn-error.log*
 # Rails
 
 # Ignore bundler config.
-/covid_ic_api/.bundle
+/api/.bundle
 
 # Ignore the default SQLite database.
-/covid_ic_api/db/*.sqlite3
-/covid_ic_api/db/*.sqlite3-journal
+/api/db/*.sqlite3
+/api/db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/covid_ic_api/log/*
-/covid_ic_api/tmp/*
-/covid_ic_api!/log/.keep
-/covid_ic_api!/tmp/.keep
+/api/log/*
+/api/tmp/*
+/api!/log/.keep
+/api!/tmp/.keep
 
 # Ignore uploaded files in development
-/covid_ic_api/storage/*
-/covid_ic_api!/storage/.keep
+/api/storage/*
+/api!/storage/.keep
 
-/covid_ic_api/.byebug_history
+/api/.byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/covid_ic_api/config/master.key
-/covid_ic_api/vendor/ruby
-/covid_ic_api/.env
+/api/config/master.key
+/api/vendor/ruby
+/api/.env
