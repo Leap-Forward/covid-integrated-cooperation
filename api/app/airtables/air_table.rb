@@ -39,6 +39,8 @@ class AirTable < Airrecord::Table
         self.map_multi_string airtable_field, self[airtable_field]
       when :need_categories #TODO: refactor this placing key logic in child class
         self.map_need_categories self[airtable_field]
+      when :initiatives
+        self.map_initiatives self[airtable_field]        
       else
         attributes[model_field] = self[airtable_field].chomp
       end
@@ -58,6 +60,19 @@ class AirTable < Airrecord::Table
     to_remove = my_model.need_categories.where.not(air_id: air_keys)
     my_model.need_categories.delete(to_remove) unless to_remove.blank?
   end
+
+  def map_initiatives air_keys
+    my_model = self.find_model
+    (air_keys || []).each do | air_key |
+      unless my_model.initiatives.find_by(air_id: air_key)
+        my_model.initiatives << Initiative.find_by(air_id: air_key)
+      end
+    end
+    my_model.save
+    to_remove = my_model.initiatives.where.not(air_id: air_keys)
+    my_model.initiatives.delete(to_remove) unless to_remove.blank?
+  end
+ 
 
   def self.sync_all 
     all = self.all
