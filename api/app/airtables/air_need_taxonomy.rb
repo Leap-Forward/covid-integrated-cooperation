@@ -2,8 +2,8 @@ class AirNeedTaxonomy < AirTable
   self.table_name = "Need Taxonomy"
   self.base_key = ENV['AIRTABLE_BASE']
 
-  @@model = "NeedCategory"
-  @@fields = {
+  @model = "NeedCategory"
+  @fields = {
     "Need" => "name",
     "Type of Need" => :multi_string
   }

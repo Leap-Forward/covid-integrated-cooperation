@@ -2,11 +2,12 @@ class AirIndividualNeed < AirTable
   self.table_name = "Individual"
   self.base_key = ENV['AIRTABLE_BASE']
 
-  @@model = "Need"
-  @@fields = {
-    "Need" => "name"
+  @model = "Need"
+  @fields = {
+    "Need" => "name",
+    "Taxonomy" => :need_categories
   }
-  @@store_air_type = true
+  @store_air_type = true
 
   # has_many :brews, class: "Brew", column: "Brews"
 
