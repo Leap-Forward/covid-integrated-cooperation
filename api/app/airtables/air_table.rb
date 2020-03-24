@@ -1,6 +1,7 @@
 class AirTable < Airrecord::Table
   @@fields = {}
   @@model = ""
+  @@store_air_type = false
   def self.fields
     @@fields
   end
@@ -28,17 +29,23 @@ class AirTable < Airrecord::Table
   def map_fields 
     attributes = {}
     @@fields.each_pair do |airtable_field, model_field| 
-      attributes[model_field] = self[airtable_field]
-      attributes["air_type"] = self.class.table_name
+      case model_field 
+      when :location_link
+      else
+        attributes[model_field] = self[airtable_field].chomp
+      end
     end
+    attributes["air_type"] = self.class.table_name if @@store_air_type
     attributes
   end
 
   def self.sync_all 
-    byebug
     all = self.all
     air_ids = all.collect {|e| e.id}
-    self.model.where.not(air_id: air_ids).destroy_all
+    model_query = self.model.where.not(air_id: air_ids)
+    model_query = model_query.where(air_type: self.table_name) if @@store_air_type
+    model_query.destroy_all
+
     all.each do | airrecord |
       airrecord.sync
     end

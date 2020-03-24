@@ -1,10 +1,13 @@
-class IndividualNeed < AirTable
-  self.table_name = "Individual"
+class AirInitiative < AirTable
+  self.table_name = "Initiatives"
   self.base_key = ENV['AIRTABLE_BASE']
 
-  @@model = "Need"
+  @@model = "Initiative"
   @@fields = {
-    "Need" => "name"
+    "Name" => "name",
+    "Description" => "description",
+    "Website" => "website",
+    "Service Area Map Link" => :location_link
   }
 
   # has_many :brews, class: "Brew", column: "Brews"
