@@ -31,6 +31,8 @@ class AirTable < Airrecord::Table
     @@fields.each_pair do |airtable_field, model_field| 
       case model_field 
       when :location_link
+      when :multi_string
+        self.map_multi_string airtable_field, self[airtable_field]
       else
         attributes[model_field] = self[airtable_field].chomp
       end
