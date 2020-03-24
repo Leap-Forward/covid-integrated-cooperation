@@ -1,10 +1,11 @@
-require 'airrecord'
-
-puts "IndividualNeed"
-
-class IndividualNeed < Airrecord::Table
+class IndividualNeed < AirTable
+  self.table_name = "Individual"
   self.base_key = ENV['AIRTABLE_BASE']
-  self.table_name = "IndividualNeeds"
+
+  @@model = "Need"
+  @@fields = {
+    "Need" => "name"
+  }
 
   # has_many :brews, class: "Brew", column: "Brews"
 
