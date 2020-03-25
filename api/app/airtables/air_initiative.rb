@@ -1,3 +1,5 @@
+# Dir.glob(File.expand_path(File.join('app', 'airtables', '*.rb')), &method(:require))
+
 class AirInitiative < AirTable
   self.table_name = "Initiatives"
   self.base_key = ENV['AIRTABLE_BASE']

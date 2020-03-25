@@ -1,3 +1,5 @@
+# Dir.glob(File.expand_path(File.join('app', 'airtables', '*.rb')), &method(:require))
+
 class AirNeedTaxonomy < AirTable
   self.table_name = "Need Taxonomy"
   self.base_key = ENV['AIRTABLE_BASE']

@@ -1,3 +1,9 @@
+# Dir.glob(File.expand_path(File.join('app', 'airtables', '*.rb')), &method(:require))
+# require 'airrecord'
+# Dotenv.load('.env')
+# puts "ENV air_table: #{ENV.keys} #{ENV.values}"
+# Airrecord.api_key = ENV['AIRTABLE_API_KEY']
+
 class AirTable < Airrecord::Table
   @fields = {}
   @model = ""
