@@ -9,4 +9,9 @@ class AirFamilyNeed < AirTable
     "Initiatives" => :initiatives
   }
   @store_air_type = true
+
+  def blank_record?
+    self["Need"].blank?
+  end
+
 end

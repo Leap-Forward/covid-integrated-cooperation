@@ -6,6 +6,10 @@ class AirTable < Airrecord::Table
     @fields
   end
 
+  def blank_record?
+    false
+  end
+
   def self.model 
     @model.constantize
   end
@@ -27,12 +31,15 @@ class AirTable < Airrecord::Table
   end
 
   def sync 
-    self.update_model self.find_or_create_model
+    unless self.blank_record?
+      self.update_model self.find_or_create_model
+    end
   end
 
   def map_fields 
     attributes = {}
     self.class.fields.each_pair do |airtable_field, model_field| 
+      Rails.logger.debug("syncing #{self.class.table_name}/#{self.id} #{airtable_field}:#{self[airtable_field]}")
       case model_field 
       when :location_link
       when :multi_string
@@ -42,7 +49,7 @@ class AirTable < Airrecord::Table
       when :initiatives
         self.map_initiatives self[airtable_field]        
       else
-        attributes[model_field] = self[airtable_field].chomp
+        attributes[model_field] = self[airtable_field]&.chomp
       end
     end
     attributes["air_type"] = self.class.table_name if self.class.store_air_type

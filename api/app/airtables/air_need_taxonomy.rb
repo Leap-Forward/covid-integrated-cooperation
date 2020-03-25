@@ -20,4 +20,9 @@ class AirNeedTaxonomy < AirTable
       my_model.need_areas.delete(to_remove) unless to_remove.blank?
     end
   end
+
+  def blank_record?
+    self["Need"].blank?
+  end
+
 end

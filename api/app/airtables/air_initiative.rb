@@ -9,4 +9,10 @@ class AirInitiative < AirTable
     "Website" => "website",
     "Service Area Map Link" => :location_link
   }
+
+  def blank_record?
+    self["Name"].blank?
+  end
+
+
 end

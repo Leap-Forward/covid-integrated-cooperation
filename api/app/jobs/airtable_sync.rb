@@ -5,7 +5,10 @@ class AirtableSync
   include Sidekiq::Worker
 
   def perform
-    puts 'Hello world'
+    AirNeedTaxonomy.sync_all
+    AirInitiative.sync_all
+    AirIndividualNeed.sync_all
+    AirFamilyNeed.sync_all
   end
 end
 

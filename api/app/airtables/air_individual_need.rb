@@ -10,4 +10,9 @@ class AirIndividualNeed < AirTable
   }
   @store_air_type = true
 
+def blank_record?
+    self["Need"].blank?
+  end
+
+
 end
