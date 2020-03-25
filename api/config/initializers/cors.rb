@@ -7,19 +7,19 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'localhost:*'
+    origins '*'
 
     resource '*',
       headers: :any,
       methods: [:get, :options, :head]
   end
 
-  allow do
-    origins '*.pause.us'
+  # allow do
+  #   origins '*.pause.us'
 
-    resource '*',
-      headers: :any,
-      methods: [:get, :options, :head]
-  end  
+  #   resource '*',
+  #     headers: :any,
+  #     methods: [:get, :options, :head]
+  # end  
 
 end

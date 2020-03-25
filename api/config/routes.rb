@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  resources :need_areas
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  namespace :api do 
-    resources :need_categories
-    resources :needs
-    resources :initiatives
-  end
+  # resources :need_areas, only: %i[index show]  do 
+  #   get 'categories', to: 'need_areas#categories'
+  # end
+  jsonapi_resources :need_areas
+  # resources :need_categories, only: %i[index show] 
+  # resources :needs, only: %i[index show] 
+  # resources :initiatives, only: %i[index show] 
 
 end
