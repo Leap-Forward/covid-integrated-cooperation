@@ -33,3 +33,5 @@ const BubbleChart = ({ root /* see root tab */ }) => (
     motionDamping={12}
   />
 );
+
+export default BubbleChart;
