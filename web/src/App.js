@@ -4,9 +4,8 @@ import './App.css';
 import AreaBubbles from './components/AreaBubbles';
 
 function App() {
- 
   return (
-    <div className="App">
+    <div className="App" >
       <AreaBubbles />
     </div>
   );
