@@ -33,6 +33,25 @@ const AreaBubbles = () => {
     setBubbles({ ...bubbles, children: needCategories });
   };
 
+  const requestNeeds = async category => {
+    const url = category
+      ? `${Env.API}/need-categories/${category.id}/needs`
+      : `${Env.API}/needs`;
+    const response = await fetch(url);
+    const { data } = await response.json();
+    const needs = data.map(e => {
+      const {
+        id,
+        attributes: { name, 'initiative-count': count, 'need-type': needType }
+      } = e;
+      return { id, name, count, needType };
+    });
+    console.log(needs);
+    //bucket by type and setstate for each subgraph. 
+    //start with single histogram
+  };
+
+
   useEffect(() => {
     const requestAreas = async () => {
       const response = await fetch(`${Env.API}/need-areas`);
@@ -65,6 +84,10 @@ const AreaBubbles = () => {
       </Button>
     ));
 
+  const bubbleSelected = (needCategory) => {
+    requestNeeds(needCategory);
+  }
+
   return (
     <GridLayout
       className="layout"
@@ -74,7 +97,7 @@ const AreaBubbles = () => {
       width={960}
     >
       <div key="a" data-grid={{ x: 0, y: 0, w: 8, h: 6, static: true }}>
-        <BubbleChart root={bubbles} />
+        <BubbleChart root={bubbles} onClick={bubbleSelected} />
       </div>
       <div key="b" data-grid={{ x: 0, y: 6, w: 6, h: 2 }}>
         {areaButtons()}

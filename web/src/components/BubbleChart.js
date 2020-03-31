@@ -6,7 +6,7 @@ import { ResponsiveBubble } from '@nivo/circle-packing';
 // website examples showcase many properties,
 // you'll often use just a few of them.
 
-const BubbleChart = ({ root /* see root tab */ }) => (
+const BubbleChart = ({ root, onClick /* see root tab */ }) => (
   <ResponsiveBubble
     root={root}
     margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
@@ -22,6 +22,9 @@ const BubbleChart = ({ root /* see root tab */ }) => (
     motionStiffness={90}
     motionDamping={12}
     labelSkipRadius={16}
+    isInteractive={true}
+    isZoomable={false}
+    onClick={(node) => onClick(node.data)}
   />
 );
 
