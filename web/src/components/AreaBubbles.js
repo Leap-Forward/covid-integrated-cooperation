@@ -17,6 +17,22 @@ const AreaBubbles = () => {
 
   const [areas, setAreas] = useState([]);
 
+  const requestCategories = async area => {
+    const url = area
+      ? `${Env.API}/need-areas/${area.id}/need-categories`
+      : `${Env.API}/need-categories`;
+    const response = await fetch(url);
+    const { data } = await response.json();
+    const needCategories = data.map(e => {
+      const {
+        id,
+        attributes: { name, 'initiative-count': count }
+      } = e;
+      return { id, name, count };
+    });
+    setBubbles({ ...bubbles, children: needCategories });
+  };
+
   useEffect(() => {
     const requestAreas = async () => {
       const response = await fetch(`${Env.API}/need-areas`);
@@ -31,30 +47,23 @@ const AreaBubbles = () => {
       setAreas(needAreas);
     };
 
-    const requestCategories = async () => {
-      const response = await fetch(`${Env.API}/need-categories`);
-      const { data } = await response.json();
-      const needCategories = data.map(e => {
-        const {
-          id,
-          attributes: { name, 'initiative-count': count }
-        } = e;
-        return { id, name, count };
-      });
-      setBubbles({ ...bubbles, children: needCategories });
-    };
-
     requestCategories();
     requestAreas();
   }, []);
 
-  const areaButtons = () => 
+  const areaButtons = () =>
     areas.map(area => (
-      <Button variant="info" key={area.id}>
+      <Button
+        className="area-button"
+        variant="info"
+        key={area.id}
+        onClick={() => {
+          requestCategories(area);
+        }}
+      >
         {area.name}
       </Button>
     ));
-  
 
   return (
     <GridLayout
