@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import GridLayout from 'react-grid-layout';
+import Button from 'react-bootstrap-button-loader';
 import Env from '../env';
 import BubbleChart from './BubbleChart';
-import Button from 'react-bootstrap-button-loader';
 import './AreaBubbles.css';
 
 const AreaBubbles = () => {
   const [bubbles, setBubbles] = useState({
-    name: 'Needs',
+    name: 'Categories',
     children: [
       {
         count: 1
@@ -15,13 +15,25 @@ const AreaBubbles = () => {
     ]
   });
 
-
+  const [areas, setAreas] = useState([]);
 
   useEffect(() => {
-    const requestData = async () => {
+    const requestAreas = async () => {
+      const response = await fetch(`${Env.API}/need-areas`);
+      const { data } = await response.json();
+      const needAreas = data.map(e => {
+        const {
+          id,
+          attributes: { name, 'initiative-count': count }
+        } = e;
+        return { id, name };
+      });
+      setAreas(needAreas);
+    };
+
+    const requestCategories = async () => {
       const response = await fetch(`${Env.API}/need-categories`);
       const { data } = await response.json();
-
       const needCategories = data.map(e => {
         const {
           id,
@@ -31,16 +43,32 @@ const AreaBubbles = () => {
       });
       setBubbles({ ...bubbles, children: needCategories });
     };
-    requestData();
+
+    requestCategories();
+    requestAreas();
   }, []);
 
+  const areaButtons = () => 
+    areas.map(area => (
+      <Button variant="info" key={area.id}>
+        {area.name}
+      </Button>
+    ));
+  
+
   return (
-    <GridLayout className="layout" autosize={true} cols={12} rowHeight={100} width={960}>
+    <GridLayout
+      className="layout"
+      autosize
+      cols={12}
+      rowHeight={100}
+      width={960}
+    >
       <div key="a" data-grid={{ x: 0, y: 0, w: 8, h: 6, static: true }}>
-         <BubbleChart  root={bubbles}/>       
+        <BubbleChart root={bubbles} />
       </div>
       <div key="b" data-grid={{ x: 0, y: 6, w: 6, h: 2 }}>
-        <Button variant="info" className="area-button">Press me!</Button>
+        {areaButtons()}
       </div>
       <div key="c" data-grid={{ x: 0, y: 6, w: 4, h: 12 }}>
         c

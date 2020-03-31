@@ -14,7 +14,10 @@ const BubbleChart = ({ root /* see root tab */ }) => (
     value="count"
     padding={6}
     borderWidth={2}
-    borderColor={{ from: 'color' }}
+    colors={{ scheme: 'paired' }}
+    colorBy="name"
+    labelTextColor={{ from: 'color', modifiers: [['darker', 2.5]] }}
+    borderColor='white'
     animate
     motionStiffness={90}
     motionDamping={12}
