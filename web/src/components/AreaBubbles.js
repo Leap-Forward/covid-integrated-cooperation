@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GridLayout from 'react-grid-layout';
 import Button from 'react-bootstrap-button-loader';
+import {BarChart} from "d3plus-react";
 import Env from '../env';
 import BubbleChart from './BubbleChart';
 import './AreaBubbles.css';
@@ -88,6 +89,21 @@ const AreaBubbles = () => {
     requestNeeds(needCategory);
   }
 
+  const barConfig = {
+    discrete: "y",
+    x: "y",
+    y: "x",
+    data: [
+      {id: "alpha", x: 4, y:  7},
+      {id: "alpha", x: 5, y: 25},
+      {id: "alpha", x: 6, y: 13},
+      {id: "beta",  x: 4, y: 17},
+      {id: "beta",  x: 5, y:  8},
+      {id: "beta",  x: 6, y: 13}
+    ],
+  };
+
+
   return (
     <GridLayout
       className="layout"
@@ -102,8 +118,8 @@ const AreaBubbles = () => {
       <div key="b" data-grid={{ x: 0, y: 6, w: 6, h: 2 }}>
         {areaButtons()}
       </div>
-      <div key="c" data-grid={{ x: 0, y: 6, w: 4, h: 12 }}>
-        c
+      <div key="c" data-grid={{ x: 8, y: 0, w: 4, h: 4 }}>
+        <BarChart config={barConfig}/>   
       </div>
     </GridLayout>
     // <div className="bubble-chart" >
