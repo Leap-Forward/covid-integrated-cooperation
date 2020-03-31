@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import Env from '../env';
 import BubbleChart from './BubbleChart';
-
 import './AreaBubbles.css';
 
 const bubbleData = {
@@ -40,55 +39,32 @@ const commonProperties = {
   labelSkipRadius: 16
 };
 
-class AreaBubbles extends Component {
-  constructor(props) {
-    super(props);
+function AreaBubbles() {
+  // const [root, setRoot] = useState({
+  //   name: 'Needs',
+  //   children: []
+  // });
 
-    this.state = {
-      data: bubbleData
-    };
-  }
+  const [root, setRoot] = useState(bubbleData);
 
-  componentDidMount() {
-    // const response = await fetch('http://localhost:3000/need-areas');
-    // const { data } = await response.json();
-    // console.log('AREAS', data);
+  useEffect(() => {
+    const requestData = async () => {
+      const response = await fetch(`${Env.API}/need-areas/2/need-categories`);
+      const { data } = await response.json();
 
-    fetch(`${Env.API}/need-areas/2/need-categories`)
-      .then(response => response.json())
-      .then(({ data }) => {
-        const bubbles = data.map(e => {
-          const {
-            id,
-            attributes: { name, 'initiative-count': count }
-          } = e;
-          return { id, name, count };
-        });
-        this.setState(prevState => ({
-          ...prevState,
-          data: { ...data, children: bubbles }
-        }));
+      const bubbles = data.map(e => {
+        const {
+          id,
+          attributes: { name, 'initiative-count': count }
+        } = e;
+        return { id, name, count };
       });
-  }
+      setRoot({ ...root, children: bubbles });
+    };
+    requestData();
+  }, []);
 
-  // const [needAreas, setNeedAreas] = useState([]);
-
-  // useEffect(() => {
-  //   const requestNeedAreas = async () => {
-  //     const response = await fetch('http://localhost:3000/need_areas');
-  //     const { data } = await response.json();
-  //     // setNeedAreas(data);
-  //     console.log(response.json());
-  //   };
-  //   requestNeedAreas();
-  // }, []);
-
-  render() {
-    // const { data } = this.state;
-    return <BubbleChart class="bubble-chart" root={this.state.data} />;
-
-    // return data.map(area => <div key={area.id}>{area.name}</div>);
-  }
+  return <BubbleChart class="bubble-chart" root={root} />;
 }
 
 export default AreaBubbles;
