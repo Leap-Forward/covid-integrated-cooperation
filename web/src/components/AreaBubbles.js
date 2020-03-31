@@ -3,49 +3,15 @@ import Env from '../env';
 import BubbleChart from './BubbleChart';
 import './AreaBubbles.css';
 
-const bubbleData = {
-  name: 'Needs',
-  children: [
-    {
-      name: 'Basic',
-      count: 100
-    },
-    {
-      name: 'Mental Health',
-      count: 500
-    },
-    {
-      name: 'utils',
-      count: 300
-    },
-    {
-      name: 'generators',
-      count: 200
-    },
-    {
-      name: 'set',
-      count: 800
-    },
-    {
-      name: 'text',
-      count: 400
-    }
-  ]
-};
-
-const commonProperties = {
-  width: 900,
-  height: 500,
-  labelSkipRadius: 16
-};
-
 function AreaBubbles() {
-  // const [root, setRoot] = useState({
-  //   name: 'Needs',
-  //   children: []
-  // });
-
-  const [root, setRoot] = useState(bubbleData);
+  const [root, setRoot] = useState({
+    name: 'Needs',
+    children: [
+      {
+        count: 1
+      }
+    ]
+  });
 
   useEffect(() => {
     const requestData = async () => {
