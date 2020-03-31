@@ -18,8 +18,6 @@ const BubbleChart = ({ root /* see root tab */ }) => (
     animate
     motionStiffness={90}
     motionDamping={12}
-    width={900}
-    height={500}
     labelSkipRadius={16}
   />
 );
