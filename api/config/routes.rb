@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   jsonapi_resources :need_areas, only: %i[index show] do
     jsonapi_related_resources :need_categories
   end
+  jsonapi_resources :need_categories, only: %i[index show]
   # resources :need_categories, only: %i[index show] 
   # resources :needs, only: %i[index show] 
   # resources :initiatives, only: %i[index show] 
