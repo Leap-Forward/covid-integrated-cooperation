@@ -6,6 +6,7 @@ import _ from 'lodash';
 import Env from '../env';
 import BubbleChart from './BubbleChart';
 import './AreaBubbles.css';
+import { useHistory } from 'react-router-dom';
 
 const AreaBubbles = () => {
   const [bubbles, setBubbles] = useState({
@@ -19,6 +20,7 @@ const AreaBubbles = () => {
 
   const [areas, setAreas] = useState([]);
   const [needs, setNeeds] = useState([]);
+  const history = useHistory();
 
   const requestCategories = async area => {
     const url = area
@@ -101,9 +103,11 @@ const AreaBubbles = () => {
     yConfig: { ticks: [], grid: false },
     legend: false,
     on: {
-      click: d => console.log(`Hello, I am ${d.id}`)
+      click: d => {
+        console.log(`Hello, I am ${d.id}`);
+       history.push(`/initiatives/${d.id}`);
+      }
     },
-    // xConfig: {ticks: []},
     data: needs,
   };
 

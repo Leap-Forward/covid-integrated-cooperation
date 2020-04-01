@@ -1,13 +1,18 @@
 import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
-import AreaBubbles from './components/AreaBubbles';
+import { Route, NavLink, Switch, HashRouter } from 'react-router-dom';
+
+import NeedVisualizer from './screens/NeedVisualizer';
 
 function App() {
   return (
-    <div className="App" >
-      <AreaBubbles />
-    </div>
+    <HashRouter>
+      <Switch>
+        <Route path="/initiatives/:id" />
+        <Route exact path="/">
+          <NeedVisualizer />
+        </Route>
+      </Switch>
+    </HashRouter>
   );
 }
 
