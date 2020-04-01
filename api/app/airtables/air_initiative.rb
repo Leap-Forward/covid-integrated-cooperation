@@ -13,7 +13,7 @@ class AirInitiative < AirTable
   }
 
   def blank_record?
-    self["Name"].blank?
+    self["Initiative Name"].blank?
   end
 
 
