@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import GridLayout from 'react-grid-layout';
 import Button from 'react-bootstrap-button-loader';
-import {BarChart} from "d3plus-react";
+import { BarChart } from 'd3plus-react';
+import _ from 'lodash';
 import Env from '../env';
 import BubbleChart from './BubbleChart';
 import './AreaBubbles.css';
 
 const AreaBubbles = () => {
   const [bubbles, setBubbles] = useState({
-    name: 'Categories',
+    name: 'Total',
     children: [
       {
         count: 1
@@ -17,6 +18,7 @@ const AreaBubbles = () => {
   });
 
   const [areas, setAreas] = useState([]);
+  const [needs, setNeeds] = useState([]);
 
   const requestCategories = async area => {
     const url = area
@@ -35,23 +37,27 @@ const AreaBubbles = () => {
   };
 
   const requestNeeds = async category => {
-    const url = category
+    const url = category && category.id
       ? `${Env.API}/need-categories/${category.id}/needs`
       : `${Env.API}/needs`;
     const response = await fetch(url);
     const { data } = await response.json();
     const needs = data.map(e => {
       const {
-        id,
-        attributes: { name, 'initiative-count': count, 'need-type': needType }
+        id: needId,
+        attributes: {
+          name: id,
+          'initiative-count': count,
+          'need-type': needType
+        }
       } = e;
-      return { id, name, count, needType };
+      return { needId, id, count, needType };
     });
-    console.log(needs);
-    //bucket by type and setstate for each subgraph. 
-    //start with single histogram
-  };
 
+    let n = _.sortBy(needs, ['id']).reverse();
+    n = _.sortBy(n, ['count']).map((e, i) => ({ y: i, ...e }));
+    setNeeds(n);
+  };
 
   useEffect(() => {
     const requestAreas = async () => {
@@ -85,24 +91,21 @@ const AreaBubbles = () => {
       </Button>
     ));
 
-  const bubbleSelected = (needCategory) => {
+  const bubbleSelected = needCategory => {
     requestNeeds(needCategory);
-  }
-
-  const barConfig = {
-    discrete: "y",
-    x: "y",
-    y: "x",
-    data: [
-      {id: "alpha", x: 4, y:  7},
-      {id: "alpha", x: 5, y: 25},
-      {id: "alpha", x: 6, y: 13},
-      {id: "beta",  x: 4, y: 17},
-      {id: "beta",  x: 5, y:  8},
-      {id: "beta",  x: 6, y: 13}
-    ],
   };
 
+  const barConfig = {
+    discrete: 'y',
+    x: 'count',
+    yConfig: { ticks: [], grid: false },
+    legend: false,
+    on: {
+      click: d => console.log(`Hello, I am ${d.id}`)
+    },
+    // xConfig: {ticks: []},
+    data: needs,
+  };
 
   return (
     <GridLayout
@@ -112,14 +115,14 @@ const AreaBubbles = () => {
       rowHeight={100}
       width={960}
     >
-      <div key="a" data-grid={{ x: 0, y: 0, w: 8, h: 6, static: true }}>
+      <div key="bubbles" data-grid={{ x: 0, y: 0, w: 8, h: 6, static: true }}>
         <BubbleChart root={bubbles} onClick={bubbleSelected} />
       </div>
-      <div key="b" data-grid={{ x: 0, y: 6, w: 6, h: 2 }}>
+      <div key="buttons" data-grid={{ x: 0, y: 6, w: 6, h: 2 }}>
         {areaButtons()}
       </div>
-      <div key="c" data-grid={{ x: 8, y: 0, w: 4, h: 4 }}>
-        <BarChart config={barConfig}/>   
+      <div key="histogram" data-grid={{ x: 8, y: 2, w: 4, h: 4 }}>
+        <BarChart config={barConfig} />
       </div>
     </GridLayout>
     // <div className="bubble-chart" >
