@@ -6,7 +6,7 @@ class AirInitiative < AirTable
 
   @model = "Initiative"
   @fields = {
-    "Name" => "name",
+    "Initiative Name" => "name",
     "Description" => "description",
     "Website" => "website",
     "Service Area Map Link" => :location_link
