@@ -8,7 +8,7 @@ import Env from '../env';
 import './Initiatives.css';
 
 const Initiatives = (props) => {
-  const [initatives, setInitatives] = useState([]);
+  const [initiatives, setInitiatives] = useState([]);
   const history = useHistory();
   const params = useParams();
 
@@ -21,11 +21,11 @@ const Initiatives = (props) => {
       const parsed = data.map(e => {
         const {
           id,
-          attributes: { name }
+          attributes: { name, description, website }
         } = e;
-        return { id, name };
+        return { id, name, website, description };
       });
-      setInitatives(parsed);
+      setInitiatives(parsed);
     };
     requestInitiatives();
   }, []);
@@ -39,7 +39,7 @@ const Initiatives = (props) => {
       width={960}
     >
       <div key="bubbles" data-grid={{ x: 2, y: 0, w: 10, h: 6, static: true }}>
-        <InitiativeTable initatives={initatives}/>
+        <InitiativeTable initiatives={initiatives}/>
       </div>
     </GridLayout>
     )
