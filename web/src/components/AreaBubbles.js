@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import GridLayout from 'react-grid-layout';
 import Button from 'react-bootstrap-button-loader';
 import { BarChart } from 'd3plus-react';
@@ -6,7 +7,6 @@ import _ from 'lodash';
 import Env from '../env';
 import BubbleChart from './BubbleChart';
 import './AreaBubbles.css';
-import { useHistory } from 'react-router-dom';
 
 const AreaBubbles = () => {
   const [bubbles, setBubbles] = useState({
@@ -39,9 +39,10 @@ const AreaBubbles = () => {
   };
 
   const requestNeeds = async category => {
-    const url = category && category.id
-      ? `${Env.API}/need-categories/${category.id}/needs`
-      : `${Env.API}/needs`;
+    const url =
+      category && category.id
+        ? `${Env.API}/need-categories/${category.id}/needs`
+        : `${Env.API}/needs`;
     const response = await fetch(url);
     const { data } = await response.json();
     const needs = data.map(e => {
@@ -103,12 +104,9 @@ const AreaBubbles = () => {
     yConfig: { ticks: [], grid: false },
     legend: false,
     on: {
-      click: d => {
-        console.log(`Hello, I am ${d.id}`);
-       history.push(`/initiatives/${d.id}`);
-      }
+      click: d => history.push(`/initiatives/${d.needId}`)
     },
-    data: needs,
+    data: needs
   };
 
   return (
@@ -129,10 +127,6 @@ const AreaBubbles = () => {
         <BarChart config={barConfig} />
       </div>
     </GridLayout>
-    // <div className="bubble-chart" >
-    //   <BubbleChart  root={root}/>
-    //   <BubbleChart  root={root}/>
-    // </div>
   );
 };
 
