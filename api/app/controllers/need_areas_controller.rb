@@ -1,2 +1,0 @@
-class NeedAreasController < ApplicationController
-end

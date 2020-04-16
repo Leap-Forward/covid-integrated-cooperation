@@ -1,5 +1,0 @@
-
-:schedule:
-  # sync_airtable:
-    # cron: '0 * * * * *'   # Runs once per minute
-    # class: AirtableSync
