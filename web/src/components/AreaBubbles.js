@@ -120,7 +120,7 @@ const AreaBubbles = () => {
       <div key="bubbles" data-grid={{ x: 0, y: 0, w: 8, h: 6, static: true }}>
         <BubbleChart root={bubbles} onClick={bubbleSelected} />
       </div>
-      <div key="buttons" data-grid={{ x: 0, y: 6, w: 6, h: 2 }}>
+      <div key="buttons" data-grid={{ x: 0, y: 6, w: 6, h: 1 }}>
         {areaButtons()}
       </div>
       <div key="histogram" data-grid={{ x: 8, y: 2, w: 4, h: 4 }}>
