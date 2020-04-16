@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, NavLink, Switch, HashRouter } from 'react-router-dom';
+import { Route, Switch, HashRouter } from 'react-router-dom';
 
 import NeedVisualizer from './screens/NeedVisualizer';
 import Initiatives from './screens/Initiatives';
@@ -9,7 +9,7 @@ function App() {
     <HashRouter>
       <Switch>
         <Route path="/initiatives/:id">
-        <Initiatives />
+          <Initiatives />
         </Route>
         <Route exact path="/">
           <NeedVisualizer />
