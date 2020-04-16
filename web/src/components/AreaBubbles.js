@@ -23,6 +23,7 @@ const AreaBubbles = () => {
   const history = useHistory();
 
   const requestCategories = async area => {
+    console.log('Area', area);
     const url = area
       ? `${Env.API}/need-areas/${area.id}/need-categories`
       : `${Env.API}/need-categories`;
@@ -35,6 +36,8 @@ const AreaBubbles = () => {
       } = e;
       return { id, name, count };
     });
+    console.log('Bubbles', bubbles);
+    console.log('Categories', needCategories);
     setBubbles({ ...bubbles, children: needCategories });
   };
 
@@ -66,13 +69,16 @@ const AreaBubbles = () => {
     const requestAreas = async () => {
       const response = await fetch(`${Env.API}/need-areas`);
       const { data } = await response.json();
-      const needAreas = data.map(e => {
-        const {
-          id,
-          attributes: { name, 'initiative-count': count }
-        } = e;
-        return { id, name };
-      });
+      const needAreas = data
+        .map(e => {
+          const {
+            id,
+            attributes: { name, 'initiative-count': count }
+          } = e;
+          return { id, name, count };
+        })
+        .filter(e => e.count > 0);
+      console.log('Areas', needAreas);
       setAreas(needAreas);
     };
 
