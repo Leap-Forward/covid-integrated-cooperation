@@ -21,5 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/web/src/env.js
+/web/src/env*.js
+!/web/src/env.example.js
 
