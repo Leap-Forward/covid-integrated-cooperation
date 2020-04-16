@@ -23,29 +23,3 @@ yarn-debug.log*
 yarn-error.log*
 /web/src/env.js
 
-
-# Rails
-
-# Ignore bundler config.
-/api/.bundle
-
-# Ignore the default SQLite database.
-/api/db/*.sqlite3
-/api/db/*.sqlite3-journal
-
-# Ignore all logfiles and tempfiles.
-/api/log/*
-/api/tmp/*
-/api!/log/.keep
-/api!/tmp/.keep
-
-# Ignore uploaded files in development
-/api/storage/*
-/api!/storage/.keep
-
-/api/.byebug_history
-
-# Ignore master key for decrypting credentials and more.
-/api/config/master.key
-/api/vendor/ruby
-/api/.env
