@@ -11,7 +11,7 @@
     "@testing-library/user-event": "^7.1.2",
     "airtable": "^0.8.1",
     "d3plus-react": "^0.5.8",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-bootstrap-button-loader": "^2.0.0",
